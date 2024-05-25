@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -34,10 +38,7 @@ class MainActivity : ComponentActivity() {
             FirstAppInComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                       // DisplayOurText()
-                    var list = listOf("user1","user2","user3","user4")
-                   // sayHelloToUsers(list)
-                    ModifierTetDemo()
+                   Greeting()
                 }
             }
         }
@@ -45,70 +46,27 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ModifierTetDemo(){
-    Column (modifier = Modifier.background(Color.Blue)){
-        Text(
-            text = stringResource(id = R.string.txt_welcome_to_our_course),
-            modifier = Modifier.verticalScroll(state = rememberScrollState()).background(Color.Red))
-    }
+fun Greeting() {
+    Box(modifier = Modifier.fillMaxSize()) {
+    Text(text = "Hello astha")
+//    Text(text = "Hello vipin")
+//    Text(text = "Hello Pranshee")
+        Box(modifier = Modifier
+            .align(Alignment.TopStart)
+            .fillMaxHeight()
+            .width(50.dp)
+            .background(Color.Cyan))
+        Text(text = "Hello vipin", modifier = Modifier.align(Alignment.CenterStart))
+}
 
 }
 
-@Preview(showBackground = true)
+
+@Preview
 @Composable
-fun modifierTextValue(){
-    FirstAppInComposeTheme {
-        ModifierTetDemo()
-    }
+fun showScreenView(){
+    Greeting()
 }
 
 
-@Composable
-fun DisplayOurText(){
-    SelectionContainer {
 
-
-        Text(
-            text = "Hello friend \n welcome to our course",
-            color = Color.Blue,
-            fontSize = 22.sp,
-            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Cursive,
-            maxLines = 2
-        )
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FirstAppInComposeTheme {
-//        Column {
-//            DisplayOurText()
-//        }
-//
-//    }
-//}
-
-
-@Composable
-fun sayHelloToUsers(names : List<String>){
-    Column {
-        for(name in names){
-            Text(text = "Hello $name",
-                color=Color.Blue,
-                fontSize = 32.sp)
-        }
-    }
-
-}
