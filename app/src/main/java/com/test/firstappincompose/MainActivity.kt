@@ -1,6 +1,7 @@
 package com.test.firstappincompose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -8,14 +9,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -32,83 +37,37 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstAppInComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                       // DisplayOurText()
-                    var list = listOf("user1","user2","user3","user4")
-                   // sayHelloToUsers(list)
-                    ModifierTetDemo()
+                ButtonLayout()
                 }
             }
         }
     }
-}
 
 @Composable
-fun ModifierTetDemo(){
-    Column (modifier = Modifier.background(Color.Blue)){
-        Text(
-            text = stringResource(id = R.string.txt_welcome_to_our_course),
-            modifier = Modifier.verticalScroll(state = rememberScrollState()).background(Color.Red))
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun modifierTextValue(){
-    FirstAppInComposeTheme {
-        ModifierTetDemo()
-    }
-}
-
-
-@Composable
-fun DisplayOurText(){
-    SelectionContainer {
-
-
-        Text(
-            text = "Hello friend \n welcome to our course",
-            color = Color.Blue,
-            fontSize = 22.sp,
-            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Cursive,
-            maxLines = 2
-        )
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FirstAppInComposeTheme {
-//        Column {
-//            DisplayOurText()
-//        }
-//
-//    }
-//}
-
-
-@Composable
-fun sayHelloToUsers(names : List<String>){
+fun ButtonLayout() {
+    val context = LocalContext.current.applicationContext
     Column {
-        for(name in names){
-            Text(text = "Hello $name",
-                color=Color.Blue,
-                fontSize = 32.sp)
+        Button(
+            onClick = {
+                Toast.makeText(
+                    context, "you clicked the button",
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            shape = RoundedCornerShape(size = 20.dp)
+        ) {
+            Text(text = "Click me")
+
         }
     }
 
+
 }
+
+
+@Preview
+@Composable
+fun ShowButtonLayout(){
+    ButtonLayout()
+}
+
