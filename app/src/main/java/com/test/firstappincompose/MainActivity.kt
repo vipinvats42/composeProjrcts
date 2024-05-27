@@ -1,22 +1,25 @@
 package com.test.firstappincompose
 
 import android.os.Bundle
+import android.text.Layout.Alignment
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.ModifierLocal
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -41,7 +44,25 @@ class MainActivity : ComponentActivity() {
     }
     @Composable
     fun GrettingImage(){
-        Image(painter = painterResource(id = R.drawable.lion), contentDescription = "Lion" )
+        Image(painter = painterResource(id = R.drawable.lion),
+            contentDescription = "Lion",
+            modifier = Modifier
+                .size(100.dp)
+                .scale(0.6f)
+                .aspectRatio(16f/9f)
+                .blur(
+                    radiusX = 10.dp,
+                    radiusY = 10.dp,
+                    edgeTreatment = BlurredEdgeTreatment(shape = RoundedCornerShape(percent = 2))
+                )
+                .clip(CircleShape)
+                .border(width = 2.dp,
+                    color = Color.Red,
+                    shape = CircleShape),
+            contentScale = ContentScale.Crop
+
+        )
+
     }
 
     @Preview
