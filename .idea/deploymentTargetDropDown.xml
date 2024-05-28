@@ -11,6 +11,12 @@
       <entry key="modifierTextValue">
         <State />
       </entry>
+      <entry key="sayHelloToUsers">
+        <State />
+      </entry>
+      <entry key="showState">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
