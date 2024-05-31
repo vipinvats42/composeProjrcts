@@ -37,9 +37,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FirstAppInComposeTheme {
+                var count by remember {
+                    mutableStateOf(0)
+                }
+
+
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                   stateExample()
+                    var count by remember {
+                        mutableStateOf(0)
+                    }
+                    Column {
+                        StateLessFun(count,{count++})
+                    }
+
                 }
             }
         }
@@ -47,15 +58,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun stateExample() {
+private fun StateLessFun(count : Int,onClick : ()-> Unit) {
  // var count =0
-    var count by remember {
-        mutableStateOf(0)
-    }
+
     Column {
-        Button(onClick = {
-            count++
-        }) {
+        Button(onClick = onClick) {
             Text(text = "Click me $count")
         }
     }
