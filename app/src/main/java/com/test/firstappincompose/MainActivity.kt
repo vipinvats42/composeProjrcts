@@ -17,6 +17,8 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
@@ -49,53 +51,38 @@ class MainActivity : ComponentActivity() {
             FirstAppInComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    MyCheckBoxExample()
+                    CheckBoxExample()
                 }
             }
         }
     }
 }
 
-
 @Composable
-fun  MyCheckBoxExample(){
-    val context = LocalContext.current
-
-    val radioOptions = listOf("pizza","rajma","kaju kathri")
-
-    var (selectedItem,onOptionSelected) = remember {
-        mutableStateOf("")
+fun CheckBoxExample(){
+   var context = LocalContext.current
+    var checked by remember {
+        mutableStateOf(false)
     }
 
-    //Grouping the radio button in one group
-    Column(modifier = Modifier.selectableGroup()) {
-   radioOptions.forEach{label ->
-       Log.e("vipin1","onOptionSelected ${onOptionSelected.toString()}  , selectedItem : $selectedItem , label : $label" )
-       Row(modifier = Modifier
-           .fillMaxWidth()
-           .height(56.dp)
-           .selectable(
-               selected = (selectedItem == label),
-               onClick = { onOptionSelected(label) },
-               role = Role.RadioButton
-           )
-           .padding(horizontal = 16.dp)
-       ) {
-           Log.e("vipin","onOptionSelected $onOptionSelected  , selectedItem : $selectedItem")
-               RadioButton(modifier = Modifier.padding(16.dp) ,
-                   onClick ={ onOptionSelected(label)},
-                   selected = (selectedItem==label)
-                   )
-           
-           Text(text = label)
-       }
-   }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Checkbox(checked = checked,
+            onCheckedChange ={ checkStatus -> checked = checkStatus
+                Toast.makeText(context,"you choose : $checked  status" ,Toast.LENGTH_SHORT).show()
+            },
+            colors = CheckboxDefaults.colors(
+              uncheckedColor = Color.Red,
+                checkmarkColor = Color.Blue,
+
+            ))
+        Text(text = "selected text is Pizza")
     }
 
 }
 
 @Preview
 @Composable
-fun ShowPreview(){
-    MyCheckBoxExample()
+fun showCheckBox(){
+
 }
+
