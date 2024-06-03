@@ -1,6 +1,7 @@
 package com.test.firstappincompose
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -63,12 +64,13 @@ fun  MyCheckBoxExample(){
     val radioOptions = listOf("pizza","rajma","kaju kathri")
 
     var (selectedItem,onOptionSelected) = remember {
-        mutableStateOf(radioOptions[0])
+        mutableStateOf("")
     }
 
     //Grouping the radio button in one group
     Column(modifier = Modifier.selectableGroup()) {
    radioOptions.forEach{label ->
+       Log.e("vipin1","onOptionSelected ${onOptionSelected.toString()}  , selectedItem : $selectedItem , label : $label" )
        Row(modifier = Modifier
            .fillMaxWidth()
            .height(56.dp)
@@ -79,6 +81,7 @@ fun  MyCheckBoxExample(){
            )
            .padding(horizontal = 16.dp)
        ) {
+           Log.e("vipin","onOptionSelected $onOptionSelected  , selectedItem : $selectedItem")
                RadioButton(modifier = Modifier.padding(16.dp) ,
                    onClick ={ onOptionSelected(label)},
                    selected = (selectedItem==label)
