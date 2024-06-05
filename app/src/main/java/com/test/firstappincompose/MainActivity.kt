@@ -1,21 +1,35 @@
 package com.test.firstappincompose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -34,81 +48,58 @@ class MainActivity : ComponentActivity() {
             FirstAppInComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                       // DisplayOurText()
-                    var list = listOf("user1","user2","user3","user4")
-                   // sayHelloToUsers(list)
-                    ModifierTetDemo()
+                  challenge2()
                 }
             }
         }
     }
 }
 
-@Composable
-fun ModifierTetDemo(){
-    Column (modifier = Modifier.background(Color.Blue)){
-        Text(
-            text = stringResource(id = R.string.txt_welcome_to_our_course),
-            modifier = Modifier.verticalScroll(state = rememberScrollState()).background(Color.Red))
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun modifierTextValue(){
-    FirstAppInComposeTheme {
-        ModifierTetDemo()
-    }
-}
 
 
 @Composable
-fun DisplayOurText(){
-    SelectionContainer {
+fun challenge2(){
 
-
-        Text(
-            text = "Hello friend \n welcome to our course",
-            color = Color.Blue,
-            fontSize = 22.sp,
-            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Cursive,
-            maxLines = 2
-        )
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FirstAppInComposeTheme {
-//        Column {
-//            DisplayOurText()
-//        }
-//
-//    }
-//}
-
-
-@Composable
-fun sayHelloToUsers(names : List<String>){
-    Column {
-        for(name in names){
-            Text(text = "Hello $name",
-                color=Color.Blue,
-                fontSize = 32.sp)
+    Column(horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var context = LocalContext.current.applicationContext
+        var progressStatus by remember {
+            mutableStateOf(0f)
         }
+
+        CircularProgressIndicator(
+            progress = progressStatus,
+            color = Color.Blue,
+            strokeWidth = 6.dp,
+            modifier = Modifier.size(120.dp),
+        )
+        
+        Button(
+            onClick = { progressStatus = progressStatus+.1f
+            Toast.makeText(context,"value of progressStatus $progressStatus",Toast.LENGTH_SHORT).show()
+                      },
+            modifier = Modifier
+                .padding(top = 10.dp)
+                .width(180.dp)
+                .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+               contentColor = Color.White
+            )
+             ){
+            Text(text = "click me")
+        }
+
+
     }
 
+}
+
+
+
+@Preview
+@Composable
+fun showChallenge2(){
+    challenge2()
 }
