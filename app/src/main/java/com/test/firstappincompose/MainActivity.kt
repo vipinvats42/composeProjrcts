@@ -1,6 +1,7 @@
 package com.test.firstappincompose
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -60,9 +62,16 @@ fun BottomComposableUI(){
     }
 
     Box (modifier = Modifier.fillMaxSize()){
-        BottomNavigation(modifier = Modifier.align(alignment = Alignment.BottomCenter)) {
+        BottomNavigation(modifier = Modifier.align(alignment = Alignment.BottomEnd)) {
            bottomMenuItemsList.forEach { menuItem ->
-               BottomNavigationItem(selected = , onClick = { /*TODO*/ }, icon = { /*TODO*/ })
+               BottomNavigationItem(selected = selectedItem == menuItem.label,
+                   onClick = { selectedItem=menuItem.label
+                       Toast.makeText(context,
+                           menuItem.label,Toast.LENGTH_SHORT).show()
+                   },
+                   icon = { Icon(imageVector = menuItem.icon, contentDescription ="icons" )},
+                   label = {menuItem.label},
+                   enabled = true)
            }
         }
     }
