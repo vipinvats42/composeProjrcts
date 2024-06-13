@@ -14,6 +14,8 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -56,13 +58,23 @@ fun FloatingActionButtonUI(){
 
     Box(modifier = Modifier.fillMaxSize()){
         FloatingActionButton(modifier = Modifier
-            .padding(all=16.dp)
+            .padding(all = 16.dp)
             .align(alignment = Alignment.BottomEnd),
             onClick = {
                 Toast.makeText(context,"you clicked fab",Toast.LENGTH_SHORT).show()
             }) {
             Icon(imageVector = Icons.Filled.Add, contentDescription ="Add note" )
         }
+    }
+    
+    Box(modifier = Modifier.fillMaxSize()){
+       ExtendedFloatingActionButton(text =  {"Serach"} ,
+           icon = { Icon(imageVector = Icons.Filled.Search,
+               contentDescription = "Search") },
+           onClick = {  Toast.makeText(context,"you clicked fab",Toast.LENGTH_SHORT).show()
+           }, modifier = Modifier
+               .padding(all = 16.dp)
+               .align(alignment = Alignment.BottomStart))
     }
 
 }
