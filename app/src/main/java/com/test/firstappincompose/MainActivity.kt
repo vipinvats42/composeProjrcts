@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -58,19 +59,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun PopulateItems(osList: List<String> ){
-LazyColumn() {
+LazyRow() {
  //Adding a single item
     item { 
-        Text(text = "Pranshee tyagi")
+        Text(text = "Pranshee tyagi", fontSize = 24.sp)
     }
 
     //adding 5 items
     items(5){
-        Text(text = "Items $it")
+        Text(text = "Items $it",fontSize = 24.sp)
     }
 
     items(osList.size){ osName ->
-        Text(text = "os list are ${osName}")
+        Text(text = "os list are ${osName}", fontSize = 24.sp)
     }
 }
 }
