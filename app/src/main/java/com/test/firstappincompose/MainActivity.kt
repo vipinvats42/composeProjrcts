@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun PopulateItems(osList : List<String>) {
-LazyVerticalGrid(columns = GridCells.Fixed(3),
+        LazyVerticalGrid(columns = GridCells.Adaptive(100.dp),
     content = {
         items(osList.size){
             index ->  Card(modifier = Modifier
