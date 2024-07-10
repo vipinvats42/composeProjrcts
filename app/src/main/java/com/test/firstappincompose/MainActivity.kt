@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.test.firstappincompose.ui.theme.FirstAppInComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,81 +37,50 @@ class MainActivity : ComponentActivity() {
             FirstAppInComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                       // DisplayOurText()
-                    var list = listOf("user1","user2","user3","user4")
-                   // sayHelloToUsers(list)
-                    ModifierTetDemo()
+                    ConstraintScreen()
                 }
             }
         }
     }
-}
-
-@Composable
-fun ModifierTetDemo(){
-    Column (modifier = Modifier.background(Color.Blue)){
-        Text(
-            text = stringResource(id = R.string.txt_welcome_to_our_course),
-            modifier = Modifier.verticalScroll(state = rememberScrollState()).background(Color.Red))
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun modifierTextValue(){
-    FirstAppInComposeTheme {
-        ModifierTetDemo()
-    }
-}
 
 
-@Composable
-fun DisplayOurText(){
-    SelectionContainer {
+    @Composable
+    fun ConstraintScreen() {
+        ConstraintLayout {
+            val (redBox, blueBox, yellowBox) = createRefs()
 
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .background(Color.Red)
+                    .constrainAs(redBox){
 
-        Text(
-            text = "Hello friend \n welcome to our course",
-            color = Color.Blue,
-            fontSize = 22.sp,
-            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Cursive,
-            maxLines = 2
-        )
-    }
-}
+                    }
+            )
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .background(Color.Blue)
+                    .constrainAs(blueBox){
+                      top.linkTo(redBox.bottom)
+                    }
+            )
 
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FirstAppInComposeTheme {
-//        Column {
-//            DisplayOurText()
-//        }
-//
-//    }
-//}
-
-
-@Composable
-fun sayHelloToUsers(names : List<String>){
-    Column {
-        for(name in names){
-            Text(text = "Hello $name",
-                color=Color.Blue,
-                fontSize = 32.sp)
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .background(Color.Yellow)
+                    .constrainAs(yellowBox){
+                      top.linkTo(blueBox.bottom)
+                    }
+            )
         }
     }
 
+    @Preview(showBackground = true)
+    @Composable
+    fun ShowConstraintLayout() {
+        ConstraintScreen()
+    }
 }
