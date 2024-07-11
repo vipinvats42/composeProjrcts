@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.test.firstappincompose.ui.theme.FirstAppInComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,7 +55,10 @@ class MainActivity : ComponentActivity() {
                     .size(50.dp)
                     .background(Color.Red)
                     .constrainAs(redBox){
-
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        width= Dimension.wrapContent
+                        height= Dimension.value(100.dp)
                     }
             )
 
@@ -64,6 +68,7 @@ class MainActivity : ComponentActivity() {
                     .background(Color.Blue)
                     .constrainAs(blueBox){
                       top.linkTo(redBox.bottom)
+                      end.linkTo(redBox.end)
                     }
             )
 
@@ -73,6 +78,7 @@ class MainActivity : ComponentActivity() {
                     .background(Color.Yellow)
                     .constrainAs(yellowBox){
                       top.linkTo(blueBox.bottom)
+                        end.linkTo(blueBox.end)
                     }
             )
         }
