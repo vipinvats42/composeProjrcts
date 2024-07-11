@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.test.firstappincompose.ui.theme.FirstAppInComposeTheme
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun ConstraintScreen() {
         ConstraintLayout {
-            val (redBox, blueBox, yellowBox) = createRefs()
+            val (redBox, blueBox, yellowBox,greenBox,blackBox) = createRefs()
 
             Box(
                 modifier = Modifier
@@ -81,6 +82,32 @@ class MainActivity : ComponentActivity() {
                         end.linkTo(blueBox.end)
                     }
             )
+
+
+
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .background(Color.Red)
+                    .constrainAs(blackBox){
+                        top.linkTo(yellowBox.bottom)
+                    }
+            )
+
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .background(Color.Blue)
+                    .constrainAs(greenBox){
+                      top.linkTo(yellowBox.bottom)
+                    }
+            )
+
+
+            //style in constraint layout.
+           // createHorizontalChain(greenBox,blackBox, chainStyle = ChainStyle.Spread)
+           // createHorizontalChain(greenBox,blackBox, chainStyle = ChainStyle.SpreadInside)
+            createHorizontalChain(greenBox,blackBox, chainStyle = ChainStyle.Packed)
         }
     }
 
