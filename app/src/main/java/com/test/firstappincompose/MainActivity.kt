@@ -10,10 +10,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -25,6 +32,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.test.firstappincompose.ui.theme.FirstAppInComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,7 +50,7 @@ class MainActivity : ComponentActivity() {
                        // DisplayOurText()
                     var list = listOf("user1","user2","user3","user4")
                    // sayHelloToUsers(list)
-                    ModifierTetDemo()
+                   DisplayNavigation()
                 }
             }
         }
@@ -45,70 +58,75 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ModifierTetDemo(){
-    Column (modifier = Modifier.background(Color.Blue)){
-        Text(
-            text = stringResource(id = R.string.txt_welcome_to_our_course),
-            modifier = Modifier.verticalScroll(state = rememberScrollState()).background(Color.Red))
-    }
+fun DisplayNavigation(){
+// Nav Controller
+    val navController = rememberNavController()
 
-}
+    //Nav host : Responsible for hosting the content of the NavDestination.
+    NavHost(navController = navController,
+        startDestination = Destination.FirstScreen.toString()) {
 
-@Preview(showBackground = true)
-@Composable
-fun modifierTextValue(){
-    FirstAppInComposeTheme {
-        ModifierTetDemo()
-    }
-}
+        composable(route = Destination.FirstScreen.toString()) {
+            FirstScreen(navController = navController)
+        }
 
+        composable(route = Destination.SecondScreen.toString() + "/{userName}") {
+            val user = it.arguments?.getString("userName")
+            SecondComposable(user, navController = navController)
+        }
 
-@Composable
-fun DisplayOurText(){
-    SelectionContainer {
+        composable("profile/{userId}",
+            arguments = listOf(navArgument("userId") {
+                type = NavType.StringType
+                defaultValue = "0"
+            })
+        ) {
+            val user = it.arguments?.getString("userId", "0")
+            ThirdScreen(userId = user, navController = navController)
+        }
 
-
-        Text(
-            text = "Hello friend \n welcome to our course",
-            color = Color.Blue,
-            fontSize = 22.sp,
-            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.ExtraBold,
-            fontFamily = FontFamily.Cursive,
-            maxLines = 2
-        )
     }
 }
 
+
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun FirstScreen(navController: NavController){
+    var username by remember {
+        mutableStateOf("")
+    }
+
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Welcome to second screen", fontSize = 64.sp, color=Color.Red, lineHeight = 64.sp)
+       
+        TextField(value = username, onValueChange ={newUser -> username =newUser} )
+       
+        Button(onClick = { navController.navigate(Destination.SecondScreen.toString()+" /${username}") }) {
+            Text(text = "Go to Second screen")
+        }
+    }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    FirstAppInComposeTheme {
-//        Column {
-//            DisplayOurText()
-//        }
-//
-//    }
-//}
-
-
 @Composable
-fun sayHelloToUsers(names : List<String>){
+fun SecondComposable(user : String?,navController: NavController){
     Column {
-        for(name in names){
-            Text(text = "Hello $name",
-                color=Color.Blue,
-                fontSize = 32.sp)
+
+
+        Text(text = "Welcome ${user} to second screen", fontSize = 64.sp, color = Color.Green, lineHeight = 64.sp)
+        Button(onClick = {/* navController.navigate(Destination.FirstScreen.toString())*/
+       navController.navigate("profile/77")}) {
+            Text(text = "Go to first screen",)
         }
     }
 
 }
+
+
+@Composable
+fun ThirdScreen(userId : String?,navController: NavController){
+  Text(text = "UserId is ${userId}")
+}
+
+
+
+
